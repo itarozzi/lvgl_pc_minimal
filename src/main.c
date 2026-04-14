@@ -27,7 +27,7 @@
 #include "src/lib/simulator_settings.h"
 
 #define DEFAULT_DISPLAY_W "800"
-#define DEFAULT_DISPLAY_H "600"
+#define DEFAULT_DISPLAY_H "480"
 
 
 

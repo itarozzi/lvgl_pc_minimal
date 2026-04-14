@@ -13,7 +13,7 @@
 objects_t objects;
 
 static const char *screen_names[] = { "Main" };
-static const char *object_names[] = { "main", "obj0", "obj1" };
+static const char *object_names[] = { "main", "obj0", "obj1", "obj2", "obj3" };
 
 //
 // Event handlers
@@ -21,7 +21,7 @@ static const char *object_names[] = { "main", "obj0", "obj1" };
 
 lv_obj_t *tick_value_change_obj;
 
-static void event_handler_cb_main_obj0(lv_event_t *e) {
+static void event_handler_cb_main_obj1(lv_event_t *e) {
     lv_event_code_t event = lv_event_get_code(e);
     void *flowState = lv_event_get_user_data(e);
     (void)flowState;
@@ -47,16 +47,20 @@ void create_screen_main() {
         lv_obj_t *parent_obj = obj;
         {
             lv_obj_t *obj = lv_label_create(parent_obj);
-            lv_obj_set_pos(obj, 356, 91);
+            objects.obj0 = obj;
+            lv_obj_set_pos(obj, 0, -154);
             lv_obj_set_size(obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
-            lv_label_set_text(obj, "Hello, world!");
+            lv_obj_set_style_align(obj, LV_ALIGN_CENTER, LV_PART_MAIN | LV_STATE_DEFAULT);
+            lv_obj_set_style_text_font(obj, &lv_font_montserrat_20, LV_PART_MAIN | LV_STATE_DEFAULT);
+            lv_obj_set_style_text_color(obj, lv_color_hex(0xff033c9c), LV_PART_MAIN | LV_STATE_DEFAULT);
+            lv_label_set_text(obj, "LVGL on PC");
         }
         {
             lv_obj_t *obj = lv_button_create(parent_obj);
-            objects.obj0 = obj;
-            lv_obj_set_pos(obj, 351, 167);
+            objects.obj1 = obj;
+            lv_obj_set_pos(obj, 351, 139);
             lv_obj_set_size(obj, 100, 50);
-            lv_obj_add_event_cb(obj, event_handler_cb_main_obj0, LV_EVENT_ALL, flowState);
+            lv_obj_add_event_cb(obj, event_handler_cb_main_obj1, LV_EVENT_ALL, flowState);
             {
                 lv_obj_t *parent_obj = obj;
                 {
@@ -70,10 +74,24 @@ void create_screen_main() {
         }
         {
             lv_obj_t *obj = lv_label_create(parent_obj);
-            objects.obj1 = obj;
-            lv_obj_set_pos(obj, 289, 305);
+            objects.obj3 = obj;
+            lv_obj_set_pos(obj, 1, 5);
             lv_obj_set_size(obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
+            lv_obj_set_style_text_font(obj, &lv_font_montserrat_28, LV_PART_MAIN | LV_STATE_DEFAULT);
+            lv_obj_set_style_text_align(obj, LV_TEXT_ALIGN_CENTER, LV_PART_MAIN | LV_STATE_DEFAULT);
+            lv_obj_set_style_align(obj, LV_ALIGN_CENTER, LV_PART_MAIN | LV_STATE_DEFAULT);
             lv_label_set_text(obj, "");
+        }
+        {
+            lv_obj_t *obj = lv_qrcode_create(parent_obj);
+            objects.obj2 = obj;
+            lv_obj_set_pos(obj, 332, 325);
+            lv_obj_set_size(obj, 139, 135);
+            lv_qrcode_set_size(obj, 135);
+            lv_qrcode_set_dark_color(obj, lv_color_hex(0xff20429f));
+            lv_qrcode_set_light_color(obj, lv_color_hex(0xffe2f5fe));
+            lv_qrcode_update(obj, "https://envox.eu/", 17);
+            lv_obj_add_flag(obj, LV_OBJ_FLAG_CLICKABLE);
         }
     }
     
@@ -85,10 +103,10 @@ void tick_screen_main() {
     (void)flowState;
     {
         const char *new_val = evalTextProperty(flowState, 4, 3, "Failed to evaluate Text in Label widget");
-        const char *cur_val = lv_label_get_text(objects.obj1);
+        const char *cur_val = lv_label_get_text(objects.obj3);
         if (strcmp(new_val, cur_val) != 0) {
-            tick_value_change_obj = objects.obj1;
-            lv_label_set_text(objects.obj1, new_val);
+            tick_value_change_obj = objects.obj3;
+            lv_label_set_text(objects.obj3, new_val);
             tick_value_change_obj = NULL;
         }
     }
