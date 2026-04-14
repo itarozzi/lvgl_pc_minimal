@@ -20,6 +20,8 @@
 
 #include "lvgl/lvgl.h"
 
+#include "ui/ui.h"
+
 #include "src/lib/driver_backends.h"
 #include "src/lib/simulator_util.h"
 #include "src/lib/simulator_settings.h"
@@ -191,10 +193,12 @@ int main(int argc, char ** argv)
     // }
 #endif
 
-    /*Create a UI*/
+    /*Create a UI using .c file*/
+    // lv_ui_example();
 
-    lv_ui_example();
 
+    /*Create a UI using generated files by eez-studio*/
+    ui_init();
 
     /* Enter the run loop of the selected backend */
     driver_backends_run_loop();

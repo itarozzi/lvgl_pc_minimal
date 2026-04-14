@@ -365,6 +365,7 @@ if (CONFIG_LV_USE_FFMPEG)
 endif()
 
 file(GLOB LV_LINUX_SRC src/lib/*.c)
+file(GLOB UI_SRC CONFIGURE_DEPENDS src/ui/*.c)
 set(LV_LINUX_INC src/lib)
 
 target_include_directories(lvgl PUBLIC ${PKG_CONFIG_INC})
@@ -383,7 +384,7 @@ target_include_directories(lvgl_linux PUBLIC
 # Link LVGL with external dependencies - Modern CMake/CMP0079 allows this
 target_link_libraries(lvgl PUBLIC ${PKG_CONFIG_LIB} m pthread rt)
 
-add_executable(lvglsim src/main.c src/ui_example.c)
+add_executable(lvglsim src/main.c src/ui_example.c ${UI_SRC})
 
 # Repeat lvgl_linux to resolve circular dependency with lvgl
 target_link_libraries(lvglsim lvgl_linux lvgl lvgl_linux)
