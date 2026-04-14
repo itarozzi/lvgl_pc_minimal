@@ -21,6 +21,8 @@
 #include "lvgl/lvgl.h"
 
 #include "ui/ui.h"
+#include "ui/actions.h"
+
 
 #include "src/lib/driver_backends.h"
 #include "src/lib/simulator_util.h"
@@ -163,6 +165,10 @@ static void configure_simulator(int argc, char ** argv)
 }
 
 
+
+
+
+
 /**
  * @brief entry point
  * @description start a demo
@@ -204,6 +210,8 @@ int main(int argc, char ** argv)
     // lv_ui_example();
 
 
+    printf("UI INIT !!!\n");
+    fflush(stdout);
     /*Create a UI using generated files by eez-studio*/
     ui_init();
 
@@ -214,4 +222,9 @@ int main(int argc, char ** argv)
     driver_backends_run_loop();
 
     return 0;
+}
+
+
+void action_my_action(lv_event_t *e) {
+    printf("Native action called !!!\n");
 }
