@@ -35,6 +35,7 @@
 static void configure_simulator(int argc, char ** argv);
 static void print_lvgl_version(void);
 static void print_usage(void);
+static void ui_tick_timer_cb(lv_timer_t * timer);
 
 /* contains the name of the selected backend if user
  * has specified one on the command line */
@@ -70,6 +71,12 @@ static void print_usage(void)
     fprintf(stdout, "-B list supported backends\n");
     fprintf(stdout, "-f fullscreen\n");
     fprintf(stdout, "-m maximize\n");
+}
+
+static void ui_tick_timer_cb(lv_timer_t * timer)
+{
+    LV_UNUSED(timer);
+    ui_tick();
 }
 
 /**
@@ -199,6 +206,9 @@ int main(int argc, char ** argv)
 
     /*Create a UI using generated files by eez-studio*/
     ui_init();
+
+    /* Let LVGL drive the generated UI tick inside the active backend loop. */
+    lv_timer_create(ui_tick_timer_cb, 10, NULL);
 
     /* Enter the run loop of the selected backend */
     driver_backends_run_loop();
