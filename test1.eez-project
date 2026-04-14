@@ -10,7 +10,7 @@
       "lvglVersion": "9.4.0",
       "extensions": [],
       "imports": [],
-      "flowSupport": false,
+      "flowSupport": true,
       "displayWidth": 800,
       "displayHeight": 480,
       "displayBorderRadius": 0,
@@ -98,7 +98,7 @@
       "lvglInclude": "lvgl/lvgl.h",
       "screensLifetimeSupport": false,
       "useDockerDesktop": true,
-      "generateSourceCodeForEezFramework": false,
+      "generateSourceCodeForEezFramework": true,
       "compressFlowDefinition": false,
       "executionQueueSize": 1000,
       "expressionEvaluatorStackSize": 20
@@ -178,7 +178,7 @@
               "objID": "9e227f77-7c09-42f3-be66-e27a93646a45",
               "type": "LVGLButtonWidget",
               "left": 351,
-              "top": 215,
+              "top": 167,
               "width": 100,
               "height": 50,
               "customInputs": [],
@@ -190,7 +190,14 @@
                 "childStyles": []
               },
               "timeline": [],
-              "eventHandlers": [],
+              "eventHandlers": [
+                {
+                  "objID": "4cbb75e5-a331-4942-a50d-94d90fa184c3",
+                  "eventName": "PRESSED",
+                  "handlerType": "flow",
+                  "userData": 0
+                }
+              ],
               "leftUnit": "px",
               "topUnit": "px",
               "widthUnit": "px",
@@ -201,7 +208,7 @@
                   "type": "LVGLLabelWidget",
                   "left": 0,
                   "top": 0,
-                  "width": 52,
+                  "width": 61,
                   "height": 16,
                   "customInputs": [],
                   "customOutputs": [],
@@ -240,7 +247,7 @@
                   },
                   "group": "",
                   "groupIndex": 0,
-                  "text": "Button",
+                  "text": "Click Me",
                   "textType": "literal",
                   "longMode": "WRAP",
                   "recolor": false
@@ -262,6 +269,43 @@
               },
               "group": "",
               "groupIndex": 0
+            },
+            {
+              "objID": "8632a762-bef4-4098-d6e0-85020185b216",
+              "type": "LVGLLabelWidget",
+              "left": 289,
+              "top": 305,
+              "width": 222,
+              "height": 16,
+              "customInputs": [],
+              "customOutputs": [],
+              "style": {
+                "objID": "f6b86b95-0433-4088-d9b8-83b6e70c3c92",
+                "useStyle": "default",
+                "conditionalStyles": [],
+                "childStyles": []
+              },
+              "timeline": [],
+              "eventHandlers": [],
+              "leftUnit": "px",
+              "topUnit": "px",
+              "widthUnit": "content",
+              "heightUnit": "content",
+              "children": [],
+              "widgetFlags": "CLICK_FOCUSABLE|GESTURE_BUBBLE|PRESS_LOCK|SCROLLABLE|SCROLL_CHAIN_HOR|SCROLL_CHAIN_VER|SCROLL_ELASTIC|SCROLL_MOMENTUM|SCROLL_WITH_ARROW|SNAPPABLE",
+              "hiddenFlagType": "literal",
+              "clickableFlagType": "literal",
+              "checkedStateType": "literal",
+              "disabledStateType": "literal",
+              "states": "",
+              "localStyles": {
+                "objID": "c00dad4a-c58f-4a50-c6fd-05ab0923124e"
+              },
+              "groupIndex": 0,
+              "text": "\"Press Counter:  \" + press_cnt",
+              "textType": "expression",
+              "longMode": "WRAP",
+              "recolor": false
             }
           ],
           "widgetFlags": "CLICKABLE|PRESS_LOCK|CLICK_FOCUSABLE|GESTURE_BUBBLE|SNAPPABLE|SCROLLABLE|SCROLL_ELASTIC|SCROLL_MOMENTUM|SCROLL_CHAIN_HOR|SCROLL_CHAIN_VER",
@@ -275,10 +319,44 @@
             "objID": "8eb86917-c831-b762-5685-8d01972e8a22"
           },
           "groupIndex": 0
+        },
+        {
+          "objID": "7938cbab-2be0-4cda-c9d8-eaab267a13fe",
+          "type": "SetVariableActionComponent",
+          "left": 872,
+          "top": 259,
+          "width": 189,
+          "height": 57,
+          "customInputs": [],
+          "customOutputs": [],
+          "entries": [
+            {
+              "objID": "db11e051-9884-4d13-fd7f-f0923e504b56",
+              "variable": "press_cnt",
+              "value": "press_cnt+1"
+            }
+          ]
         }
       ],
-      "connectionLines": [],
-      "localVariables": [],
+      "connectionLines": [
+        {
+          "objID": "ef453f76-90c0-4564-dcd4-ae101c1aaef8",
+          "source": "9e227f77-7c09-42f3-be66-e27a93646a45",
+          "output": "PRESSED",
+          "target": "7938cbab-2be0-4cda-c9d8-eaab267a13fe",
+          "input": "@seqin"
+        }
+      ],
+      "localVariables": [
+        {
+          "objID": "f0874e5b-5d10-446e-d467-50b848ea8e66",
+          "name": "press_cnt",
+          "type": "integer",
+          "defaultValue": "0",
+          "persistent": false,
+          "native": false
+        }
+      ],
       "componentGroups": [],
       "userProperties": [],
       "name": "Main",

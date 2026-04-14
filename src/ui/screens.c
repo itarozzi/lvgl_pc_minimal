@@ -12,17 +12,33 @@
 
 objects_t objects;
 
+static const char *screen_names[] = { "Main" };
+static const char *object_names[] = { "main", "obj0", "obj1" };
+
 //
 // Event handlers
 //
 
 lv_obj_t *tick_value_change_obj;
 
+static void event_handler_cb_main_obj0(lv_event_t *e) {
+    lv_event_code_t event = lv_event_get_code(e);
+    void *flowState = lv_event_get_user_data(e);
+    (void)flowState;
+    
+    if (event == LV_EVENT_PRESSED) {
+        e->user_data = (void *)0;
+        flowPropagateValueLVGLEvent(flowState, 2, 0, e);
+    }
+}
+
 //
 // Screens
 //
 
 void create_screen_main() {
+    void *flowState = getFlowState(0, 0);
+    (void)flowState;
     lv_obj_t *obj = lv_obj_create(0);
     objects.main = obj;
     lv_obj_set_pos(obj, 0, 0);
@@ -37,8 +53,10 @@ void create_screen_main() {
         }
         {
             lv_obj_t *obj = lv_button_create(parent_obj);
-            lv_obj_set_pos(obj, 351, 215);
+            objects.obj0 = obj;
+            lv_obj_set_pos(obj, 351, 167);
             lv_obj_set_size(obj, 100, 50);
+            lv_obj_add_event_cb(obj, event_handler_cb_main_obj0, LV_EVENT_ALL, flowState);
             {
                 lv_obj_t *parent_obj = obj;
                 {
@@ -46,9 +64,16 @@ void create_screen_main() {
                     lv_obj_set_pos(obj, 0, 0);
                     lv_obj_set_size(obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
                     lv_obj_set_style_align(obj, LV_ALIGN_CENTER, LV_PART_MAIN | LV_STATE_DEFAULT);
-                    lv_label_set_text(obj, "Button");
+                    lv_label_set_text(obj, "Click Me");
                 }
             }
+        }
+        {
+            lv_obj_t *obj = lv_label_create(parent_obj);
+            objects.obj1 = obj;
+            lv_obj_set_pos(obj, 289, 305);
+            lv_obj_set_size(obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
+            lv_label_set_text(obj, "");
         }
     }
     
@@ -56,6 +81,17 @@ void create_screen_main() {
 }
 
 void tick_screen_main() {
+    void *flowState = getFlowState(0, 0);
+    (void)flowState;
+    {
+        const char *new_val = evalTextProperty(flowState, 4, 3, "Failed to evaluate Text in Label widget");
+        const char *cur_val = lv_label_get_text(objects.obj1);
+        if (strcmp(new_val, cur_val) != 0) {
+            tick_value_change_obj = objects.obj1;
+            lv_label_set_text(objects.obj1, new_val);
+            tick_value_change_obj = NULL;
+        }
+    }
 }
 
 typedef void (*tick_screen_func_t)();
@@ -140,16 +176,12 @@ ext_font_desc_t fonts[] = {
 };
 
 //
-// Color themes
-//
-
-uint32_t active_theme_index = 0;
-
-//
 //
 //
 
 void create_screens() {
+    
+    eez_flow_init_fonts(fonts, sizeof(fonts) / sizeof(ext_font_desc_t));
 
 // Set default LVGL theme
     lv_display_t *dispp = lv_display_get_default();
@@ -157,6 +189,9 @@ void create_screens() {
     lv_display_set_theme(dispp, theme);
     
     // Initialize screens
+    eez_flow_init_screen_names(screen_names, sizeof(screen_names) / sizeof(const char *));
+    eez_flow_init_object_names(object_names, sizeof(object_names) / sizeof(const char *));
+    
     // Create screens
     create_screen_main();
 }

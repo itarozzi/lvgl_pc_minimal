@@ -365,7 +365,10 @@ if (CONFIG_LV_USE_FFMPEG)
 endif()
 
 file(GLOB LV_LINUX_SRC src/lib/*.c)
-file(GLOB UI_SRC CONFIGURE_DEPENDS src/ui/*.c)
+file(GLOB UI_SRC CONFIGURE_DEPENDS
+    src/ui/*.c
+    src/ui/*.cpp
+)
 set(LV_LINUX_INC src/lib)
 
 target_include_directories(lvgl PUBLIC ${PKG_CONFIG_INC})
