@@ -106,7 +106,16 @@
   },
   "variables": {
     "objID": "c6c71e16-53e1-217f-d03b-cef56c6b037a",
-    "globalVariables": [],
+    "globalVariables": [
+      {
+        "objID": "66d0b3f7-ca13-4c8a-87ed-a7346e559b69",
+        "name": "myvar1",
+        "type": "integer",
+        "defaultValue": "10",
+        "persistent": false,
+        "native": true
+      }
+    ],
     "structures": [],
     "enums": []
   },
@@ -804,6 +813,52 @@
               },
               "group": "",
               "groupIndex": 0
+            },
+            {
+              "objID": "9e5ae028-f580-4c9b-eb2f-56b89c41d212",
+              "type": "LVGLLabelWidget",
+              "left": 1,
+              "top": 5,
+              "width": 408,
+              "height": 30,
+              "customInputs": [],
+              "customOutputs": [],
+              "style": {
+                "objID": "d61d0bca-c4b6-4fef-adf1-dc47b54baa22",
+                "useStyle": "default",
+                "conditionalStyles": [],
+                "childStyles": []
+              },
+              "timeline": [],
+              "eventHandlers": [],
+              "leftUnit": "px",
+              "topUnit": "px",
+              "widthUnit": "content",
+              "heightUnit": "content",
+              "children": [],
+              "widgetFlags": "CLICK_FOCUSABLE|GESTURE_BUBBLE|PRESS_LOCK|SCROLLABLE|SCROLL_CHAIN_HOR|SCROLL_CHAIN_VER|SCROLL_ELASTIC|SCROLL_MOMENTUM|SCROLL_WITH_ARROW|SNAPPABLE",
+              "hiddenFlagType": "literal",
+              "clickableFlagType": "literal",
+              "checkedStateType": "literal",
+              "disabledStateType": "literal",
+              "states": "",
+              "localStyles": {
+                "objID": "998baeaa-bf64-409c-ae03-c77c3ef8b3bc",
+                "definition": {
+                  "MAIN": {
+                    "DEFAULT": {
+                      "text_font": "MONTSERRAT_28",
+                      "text_align": "CENTER",
+                      "align": "CENTER"
+                    }
+                  }
+                }
+              },
+              "groupIndex": 0,
+              "text": "\"Native Variable:  \" + myvar1",
+              "textType": "expression",
+              "longMode": "WRAP",
+              "recolor": false
             }
           ],
           "widgetFlags": "CLICKABLE|PRESS_LOCK|CLICK_FOCUSABLE|GESTURE_BUBBLE|SNAPPABLE|SCROLL_ELASTIC|SCROLL_MOMENTUM|SCROLL_CHAIN_HOR|SCROLL_CHAIN_VER",

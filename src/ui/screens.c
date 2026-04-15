@@ -13,7 +13,7 @@
 objects_t objects;
 
 static const char *screen_names[] = { "Main", "Page2" };
-static const char *object_names[] = { "main", "page2", "obj0", "obj1", "obj2", "obj3", "obj4", "obj5", "obj6", "obj7", "obj8" };
+static const char *object_names[] = { "main", "page2", "obj0", "obj1", "obj2", "obj3", "obj4", "obj5", "obj6", "obj7", "obj8", "obj9" };
 
 //
 // Event handlers
@@ -224,6 +224,16 @@ void create_screen_page2() {
                 }
             }
         }
+        {
+            lv_obj_t *obj = lv_label_create(parent_obj);
+            objects.obj9 = obj;
+            lv_obj_set_pos(obj, 1, 5);
+            lv_obj_set_size(obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
+            lv_obj_set_style_text_font(obj, &lv_font_montserrat_28, LV_PART_MAIN | LV_STATE_DEFAULT);
+            lv_obj_set_style_text_align(obj, LV_TEXT_ALIGN_CENTER, LV_PART_MAIN | LV_STATE_DEFAULT);
+            lv_obj_set_style_align(obj, LV_ALIGN_CENTER, LV_PART_MAIN | LV_STATE_DEFAULT);
+            lv_label_set_text(obj, "");
+        }
     }
     
     tick_screen_page2();
@@ -238,6 +248,15 @@ void tick_screen_page2() {
         if (strcmp(new_val, cur_val) != 0) {
             tick_value_change_obj = objects.obj8;
             lv_label_set_text(objects.obj8, new_val);
+            tick_value_change_obj = NULL;
+        }
+    }
+    {
+        const char *new_val = evalTextProperty(flowState, 5, 3, "Failed to evaluate Text in Label widget");
+        const char *cur_val = lv_label_get_text(objects.obj9);
+        if (strcmp(new_val, cur_val) != 0) {
+            tick_value_change_obj = objects.obj9;
+            lv_label_set_text(objects.obj9, new_val);
             tick_value_change_obj = NULL;
         }
     }
