@@ -7,8 +7,8 @@ This repository is based on the original LVGL PC port project:
 It is a separate repository created to provide a smaller and cleaner starting point for new LVGL projects on PC.
 
 
-Click to watch the video:
-[![Watch the video](doc/video/img_demo.png)](doc/video/video1.mkv)
+https://github.com/user-attachments/assets/c3bcb249-f60c-4740-8692-fee92b10ba6d
+
 
 
 ## Goals
