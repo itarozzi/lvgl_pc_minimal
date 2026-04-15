@@ -62,3 +62,8 @@ dkms.conf
 /.settings/
 .*project
 .deps
+
+
+# Docs generated files
+/doc/source/latex
+/doc/source/xml

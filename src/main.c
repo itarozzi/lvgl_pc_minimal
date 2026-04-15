@@ -1,14 +1,16 @@
 /*******************************************************************
  *
- * main.c - LVGL simulator for GNU/Linux
+ * main.c - LVGL Application for GNU/Linux
  *
- * Based on the original file from the repository
+ * Author: Ivan Tarozzi (itarozzi@gmail.com)
  *
  *
  * To see how each driver is initialized check the
  * 'src/lib/display_backends' directory
  *
  *
+ * Based on the original file from the repository:
+ * https://github.com/lvgl/lv_port_linux 
  * Author: EDGEMTech Ltd, Erik Tagirov (erik.tagirov@edgemtech.ch)
  *
  ******************************************************************/
