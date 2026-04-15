@@ -12,12 +12,14 @@ It is a separate repository created to provide a smaller and cleaner starting po
 - avoid git submodules in the project structure
 - remove bundled examples and demos
 - provide a practical boilerplate for starting a new LVGL application on a PC target
+- create desktop LVGL projects based on EEZ Studio UI generation and EEZ-Flow
+- Use C++ runtime/backend connected to field devices, external services, or application logic
 
 ## UI Layer
 
 The UI is intended to be generated with EEZ Studio:
 
-- https://www.envox.eu/studio/
+- https://www.envox.eu/studio/studio-introduction/
 
 This repository is structured around an EEZ Studio generated UI integrated with LVGL.
 
@@ -88,10 +90,6 @@ Other useful runtime options include:
 - `-R` to set display rotation
 
 This makes the repository useful both for desktop simulation during development and for Linux-based targets that need a different LVGL backend.
-
-## Purpose
-
-The main purpose of this repository is to serve as a reusable boilerplate for new desktop LVGL projects, especially when the UI is designed in EEZ Studio and the runtime/backend needs to connect to field devices, external services, or application logic implemented in C++.
 
 ## Build
 
