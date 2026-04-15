@@ -10,6 +10,7 @@ demo
 *.elf
 /build/
 /bin/
+/build*/
 
 # Linker output
 *.ilk

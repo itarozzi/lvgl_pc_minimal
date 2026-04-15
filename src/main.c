@@ -22,6 +22,9 @@
 
 #include "ui/ui.h"
 #include "ui/actions.h"
+#include "ui/vars.h"
+
+#include "app_runtime.h"
 
 
 #include "src/lib/driver_backends.h"
@@ -38,6 +41,7 @@ static void configure_simulator(int argc, char ** argv);
 static void print_lvgl_version(void);
 static void print_usage(void);
 static void ui_tick_timer_cb(lv_timer_t * timer);
+static void ui_runtime_sync_timer_cb(lv_timer_t * timer);
 
 /* contains the name of the selected backend if user
  * has specified one on the command line */
@@ -82,9 +86,30 @@ static void ui_tick_timer_cb(lv_timer_t * timer)
 }
 
 /**
+ * @brief Synchronize runtime data with UI native variables
+ *
+ * Read the latest application snapshot produced by the secondary C++
+ * runtime thread and copy its values into the native variables consumed
+ * by the EEZ UI bindings from the LVGL thread.
+ *
+ * @param timer The LVGL timer instance
+ */
+static void ui_runtime_sync_timer_cb(lv_timer_t * timer)
+{
+    app_snapshot_t snapshot;
+
+    LV_UNUSED(timer);
+
+    app_runtime_get_snapshot(&snapshot);
+    set_var_myvar1(snapshot.myvar1);
+}
+
+/**
  * @brief Configure simulator
- * @description process arguments received by the program to select
- * appropriate options
+ *
+ * Process the command-line arguments used to select backend and window
+ * options before the simulator enters the LVGL run loop.
+ *
  * @param argc the count of arguments in argv
  * @param argv The arguments
  */
@@ -170,8 +195,11 @@ static void configure_simulator(int argc, char ** argv)
 
 
 /**
- * @brief entry point
- * @description start a demo
+ * @brief Entry point
+ *
+ * Initialize LVGL, the selected backend, the generated UI, and the
+ * application runtime before entering the backend event loop.
+ *
  * @param argc the count of arguments in argv
  * @param argv The arguments
  */
@@ -215,11 +243,22 @@ int main(int argc, char ** argv)
     /*Create a UI using generated files by eez-studio*/
     ui_init();
 
+    if(app_runtime_init() != 0) {
+        die("Failed to initialize app runtime");
+    }
+
+    if(app_runtime_start() != 0) {
+        die("Failed to start app runtime");
+    }
+
     /* Let LVGL drive the generated UI tick inside the active backend loop. */
     lv_timer_create(ui_tick_timer_cb, 10, NULL);
+    lv_timer_create(ui_runtime_sync_timer_cb, 50, NULL);
 
     /* Enter the run loop of the selected backend */
     driver_backends_run_loop();
+
+    app_runtime_stop();
 
     return 0;
 }
